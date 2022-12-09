@@ -28,6 +28,7 @@
                         <th class="text-center" scope="col">Edit</th>
                         <th class="text-center" scope="col">Delete</th>
                         <th class="text-center" scope="col">File</th>
+                        <th class="text-center" scope="col">Updated Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +48,7 @@
                             <br />
                             <a class="link-primary" target="_blank" href="{% get_media_prefix %}{{ item.document }}">{{ item.document }}</a>
                         </td>
+                        <td class="text-center">{{ item.updated_time }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

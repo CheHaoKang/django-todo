@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.forms import modelform_factory
 # from django.core.files.storage import FileSystemStorage
 from .models import List
 from .forms import ListForm
@@ -79,7 +80,8 @@ def upload(request, item_id):
             messages.success(request, 'No file uploaded.')
         else:
             item = List.objects.get(pk=item_id)
-            form = ListForm(request.POST, request.FILES, instance=item)
+            ListForm_ = modelform_factory(List, fields=("document",))
+            form = ListForm_(request.POST, request.FILES, instance=item)
             if form.is_valid():
                 form.save()
                 messages.success(request, 'File saved successfully.')
