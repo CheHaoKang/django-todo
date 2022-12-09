@@ -1,0 +1,57 @@
+{% extends 'todo_list/base.html' %}
+
+{% load static %}
+
+{% block title %}
+| Home
+{% endblock title %}
+
+{% block content %}
+<div class="content">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if todo_list %}
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead style="background-color: #00cc00;">
+                    <tr>
+                        <th class="text-center" scope="col">Item</th>
+                        <th class="text-center" scope="col">Action</th>
+                        <th class="text-center" scope="col">Edit</th>
+                        <th class="text-center" scope="col">Delete</th>
+                        <th class="text-center" scope="col">File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in todo_list %}
+                    <tr class="{{ item.completed|yesno:"table-secondary,," }}">
+                    {% if item.completed %}
+                        <td class="striker text-center">{{ item.item }}</td>
+                        <td class="text-center"><a class="btn btn-primary" href="{% url 'uncross' item.id %}">Uncross</a></td>
+                    {% else %}
+                        <td class="text-center">{{ item.item }}</td>
+                        <td class="text-center"><a class="btn btn-primary" href="{% url 'cross_off' item.id %}">Cross off</a></td>
+                    {% endif %}
+                        <td class="text-center"><a class="btn btn-warning" href="{% url 'edit' item.id %}">Edit</a></td>
+                        <td class="text-center"><a class="btn btn-danger" href="{% url 'delete' item.id %}">Delete</a></td>
+                        <td class="text-center">
+                            <a class="btn btn-primary" href="{% url 'upload' item.id %}">Upload</a>
+                            <br />
+                            <a class="link-primary" target="_blank" href="{% get_media_prefix %}{{ item.document }}">{{ item.document }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

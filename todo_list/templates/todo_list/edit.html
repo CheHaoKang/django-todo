@@ -1,0 +1,23 @@
+{% extends 'todo_list/base.html' %}
+
+{% block title %}
+| Edit
+{% endblock title %}
+
+{% block content %}
+    <div class="content">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-10">
+                    <input class="form-control" type="search" value="{{ item.item }}" name="item">
+                    <input type="hidden" value="{{ item.completed }}" name="completed">
+                </div>
+                <div class="col-md-0">
+                    <button class="btn btn-outline-success" type="submit">Edit Item</button>
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">Back</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

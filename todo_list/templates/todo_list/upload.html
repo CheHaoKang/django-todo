@@ -1,0 +1,30 @@
+{% extends 'todo_list/base.html' %}
+
+{% load static %}
+
+{% block title %}
+| Upload
+{% endblock title %}
+
+{% block content %}
+    <div class="content">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="file" class="form-control" name="document" />
+                    <input type="hidden" value="{{ item.item }}" name="item">
+                    <input type="hidden" value="{{ item.completed }}" name="completed">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-success" type="submit">Upload</button>
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">Back</button>
+                </div>
+            </div>
+        </form>
+        <br />
+        {% if item.document %}
+            <p>File uploaded at: <a class="link-primary" target="_blank" href="{% get_media_prefix %}{{ item.document }}">{{ item.document }}</a></p>
+        {% endif %}
+    </div>
+{% endblock content %}
